@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { getMatriz } from "./Logica";
+import { useEffect, useState } from "react";
+import { getMatriz, nuevoEstado } from "./Logica";
+
+import cloneDeep from "lodash/cloneDeep";
 
 export default function TableroGame({ filas, columnas }) {
   const [matrizTablero, setMatrizTablero] = useState([]);
@@ -23,8 +25,16 @@ export default function TableroGame({ filas, columnas }) {
         >
           Limpiar Tablero
         </button>
-        <button type="button" class="btn btn-success">
-          Iniciar
+        <button
+          type="button"
+          class="btn btn-success"
+          onClick={() =>
+            setMatrizTablero(
+              nuevoEstado(filas, columnas, cloneDeep(matrizTablero))
+            )
+          }
+        >
+          Nuevo estado
         </button>
       </div>
       <table className="table table-bordered">
@@ -37,11 +47,12 @@ export default function TableroGame({ filas, columnas }) {
                   //Actualizar estado de una celula
                   setMatrizTablero(
                     matrizTablero.map((fila, i_filaUpdate) => {
-                      if (i_filaUpdate === i_filas) {
-                        fila[i_columnas] = !fila[i_columnas];
-                        return fila;
-                      }
-                      return fila;
+                      return fila.map((column, i_columUpdate) => {
+                        return i_filaUpdate === i_filas &&
+                          i_columnas === i_columUpdate
+                          ? !column
+                          : column;
+                      });
                     })
                   );
                 }}
