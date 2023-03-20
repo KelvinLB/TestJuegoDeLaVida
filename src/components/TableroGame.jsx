@@ -32,13 +32,13 @@ export default function TableroGame({ filas, columnas }) {
           <tr>
             {filas.map((columnas, i_columnas) => (
               <td
-                style={{ background: columnas.viva ? "black" : "white" }}
+                style={{ background: columnas ? "black" : "white" }}
                 onClick={() => {
                   //Actualizar estado de una celula
                   setMatrizTablero(
                     matrizTablero.map((fila, i_filaUpdate) => {
                       if (i_filaUpdate === i_filas) {
-                        fila[i_columnas].viva = !fila[i_columnas].viva;
+                        fila[i_columnas] = !fila[i_columnas];
                         return fila;
                       }
                       return fila;

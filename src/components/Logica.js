@@ -5,13 +5,7 @@
  * @returns Matriz de booleanos
  */
 export const getMatriz = (filas, columnas) => {
-  const matriz = [];
-  for (let i_filas = 0; i_filas < filas; i_filas++) {
-    matriz.push([]);
-    const currentFila = matriz[matriz.length - 1];
-    for (let i_columnas = 0; i_columnas < columnas; i_columnas++) {
-      currentFila.push({ viva: false });
-    }
-  }
-  return matriz;
+  return Array.from({ length: filas }, () => {
+    return Array.from({ length: columnas }, () => false);
+  });
 };
