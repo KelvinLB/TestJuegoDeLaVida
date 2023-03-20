@@ -1,23 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getMatriz } from "./Logica";
 
-export default function TableroGame() {
+export default function TableroGame({ filas, columnas }) {
+  const [matrizTablero, setMatrizTablero] = useState([]);
+  useEffect(() => {
+    if (filas && columnas && filas + columnas > 1) {
+      setMatrizTablero(getMatriz(filas, columnas));
+    }
+  }, [filas, columnas]);
   return (
     <table className="table table-bordered">
-      <tr>
-        <td>Elemento 1,1</td>
-        <td>Elemento 1,2</td>
-        <td>Elemento 1,3</td>
-      </tr>
-      <tr>
-        <td>Elemento 2,1</td>
-        <td>Elemento 2,2</td>
-        <td>Elemento 2,3</td>
-      </tr>
-      <tr>
-        <td>Elemento 3,1</td>
-        <td>Elemento 3,2</td>
-        <td>Elemento 3,3</td>
-      </tr>
+      {matrizTablero.map((filas) => (
+        <tr>
+          {filas.map((columnas) => (
+            <td style={{ background: columnas.viva ? "black" : "white" }} />
+          ))}
+        </tr>
+      ))}
     </table>
   );
 }
