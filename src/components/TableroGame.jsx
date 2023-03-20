@@ -5,11 +5,23 @@ import cloneDeep from "lodash/cloneDeep";
 
 export default function TableroGame({ filas, columnas }) {
   const [matrizTablero, setMatrizTablero] = useState([]);
+  const [repetirInfinito, setRepetirInfinito] = useState(-1);
+  const [detenerEjecucion, setDetenerEjecucion] = useState(false);
   useEffect(() => {
     if (filas && columnas && filas + columnas > 1) {
       setMatrizTablero(getMatriz(filas, columnas));
     }
   }, [filas, columnas]);
+  useEffect(() => {
+    if (detenerEjecucion) {
+      ejecucionNuevoEstado();
+      setRepetirInfinito(repetirInfinito + 1);
+    }
+  }, [repetirInfinito]);
+
+  const ejecucionNuevoEstado = () => {
+    setMatrizTablero(nuevoEstado(filas, columnas, matrizTablero));
+  };
   return (
     <div
       className="d-flex flex-column p-20"
@@ -27,14 +39,20 @@ export default function TableroGame({ filas, columnas }) {
         </button>
         <button
           type="button"
-          class="btn btn-success"
-          onClick={() =>
-            setMatrizTablero(
-              nuevoEstado(filas, columnas, cloneDeep(matrizTablero))
-            )
-          }
+          class="btn btn-danger"
+          onClick={() => setDetenerEjecucion(false)}
         >
-          Nuevo estado
+          Detener
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          onClick={() => {
+            setDetenerEjecucion(true);
+            setRepetirInfinito(repetirInfinito + 1);
+          }}
+        >
+          Ejecucion automatica
         </button>
       </div>
       <table className="table table-bordered">
