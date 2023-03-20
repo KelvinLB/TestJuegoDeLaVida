@@ -9,14 +9,47 @@ export default function TableroGame({ filas, columnas }) {
     }
   }, [filas, columnas]);
   return (
-    <table className="table table-bordered">
-      {matrizTablero.map((filas) => (
-        <tr>
-          {filas.map((columnas) => (
-            <td style={{ background: columnas.viva ? "black" : "white" }} />
-          ))}
-        </tr>
-      ))}
-    </table>
+    <div
+      className="d-flex flex-column p-20"
+      style={{
+        rowGap: 10,
+      }}
+    >
+      <div class="d-flex justify-content-center" style={{ columnGap: 10 }}>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onClick={() => setMatrizTablero(getMatriz(filas, columnas))}
+        >
+          Limpiar Tablero
+        </button>
+        <button type="button" class="btn btn-success">
+          Iniciar
+        </button>
+      </div>
+      <table className="table table-bordered">
+        {matrizTablero.map((filas, i_filas) => (
+          <tr>
+            {filas.map((columnas, i_columnas) => (
+              <td
+                style={{ background: columnas.viva ? "black" : "white" }}
+                onClick={() => {
+                  //Actualizar estado de una celula
+                  setMatrizTablero(
+                    matrizTablero.map((fila, i_filaUpdate) => {
+                      if (i_filaUpdate === i_filas) {
+                        fila[i_columnas].viva = !fila[i_columnas].viva;
+                        return fila;
+                      }
+                      return fila;
+                    })
+                  );
+                }}
+              />
+            ))}
+          </tr>
+        ))}
+      </table>
+    </div>
   );
 }

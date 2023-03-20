@@ -10,7 +10,7 @@ export const getMatriz = (filas, columnas) => {
     matriz.push([]);
     const currentFila = matriz[matriz.length - 1];
     for (let i_columnas = 0; i_columnas < columnas; i_columnas++) {
-      currentFila.push(false);
+      currentFila.push({ viva: false });
     }
   }
   return matriz;

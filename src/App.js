@@ -1,10 +1,9 @@
-import Tablero from "./components/Tablero";
 import TableroGame from "./components/TableroGame";
 
 function App() {
   return (
-    <div className="container-fluid">
-      <TableroGame filas={5} columnas={5} />
+    <div className="d-flex justify-content-center align-items-center">
+      <TableroGame filas={30} columnas={30} />
     </div>
   );
 }
